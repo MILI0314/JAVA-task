@@ -1,0 +1,52 @@
+package Task;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Task {
+	
+		public static void main(String[] args) {
+			// TODO Auto-generated method stub
+			Scanner input=new Scanner(System.in);
+			int m,n;
+			System.out.println("Enter an integr m:");
+			m=input.nextInt();
+			ArrayList<Integer> list = new ArrayList<>();
+		for(int i=2;m>1;i++)
+	{
+		if(m%i==0)
+		{
+			list.add(i);
+			//System.out.println(i);
+			m=m/i;
+			i=1;
+		}
+	}
+		n=cfcs(list);
+		System.out.println("the perfect N is: "+n);
+}		
+		public static int cfcs(ArrayList<Integer> list) {
+			// TODO Auto-generated method stub
+			ArrayList<Integer> list1 = new ArrayList<>();
+			for(int i=0;i<list.size();i++)
+			{
+			    for(int j=i+1;j<list.size();j++)
+			    {
+			    	if(list.get(i)==list.get(j))
+			    	{
+			    		list.remove(j);
+			    		list.remove(i);
+			    		j--;
+			    	}
+			    	else
+			    		break;
+			    }
+			}
+			int result=1;
+			for(int i=0;i<list.size();i++)
+			{
+				//System.out.println(list.get(i));
+				result=result*list.get(i);
+			}
+			return result;
+		}
+}
