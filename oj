@@ -1,0 +1,77 @@
+#include<stdio.h>
+#define OK 1
+#define ERROR 0
+#define TRUE 1
+#define FALSE 0
+#define MAXVEX 100 /* 最大顶点数，应由用户定义 */
+#define INFINITY 65535
+
+typedef int Status;	/* Status是函数的类型,其值是函数结果状态代码，如OK等 */
+typedef char VertexType; /* 顶点类型应由用户定义  */
+typedef int EdgeType; /* 边上的权值类型应由用户定义 */
+typedef struct
+{
+	VertexType vexs[MAXVEX]; /* 顶点表 */
+	EdgeType arc[MAXVEX][MAXVEX];/* 邻接矩阵，可看作边表 */
+	int numNodes, numEdges; /* 图中当前的顶点数和边数  */
+}MGraph;
+
+
+/* 键盘输入顶点和边的信息，建立图的邻接矩阵表示 */
+void CreateMGraph(MGraph *G,int m)
+{
+	int d1, d2;
+
+	G->numNodes = m, G->numEdges = m-1;
+	for (int i = 1; i <= m; i++)
+	{
+		for (int j = 1; j <= m; j++)
+		{
+			G->arc[i][j] = 0;
+		}
+	}
+
+	for (int i = 1; i <= m; i++)
+	{
+		scanf_s("%d%d", &d1, &d2);
+		G->arc[d1][d2] = 1;
+		G->arc[d2][d1] = 1;
+	}
+
+}
+
+void dis(int v,int m, MGraph *G,int visited[]) {
+	int s[10], top = -1, j;
+	visited[v] = 1;
+	s[++top] = v;
+	while (top != -1);
+	{
+		v = s[top];
+		for (j = 0; j < m; j++)
+		{
+			if (visited[j] == 0 && G->arc[v][j] == 1)
+			{
+				printf("%d ", G->vexs[j]);
+				visited[j] = 1;
+				s[++top] = j;
+				break;
+			}
+		}
+	       if (j == m)
+			top--;
+	}
+
+}
+
+int main(void)
+{int m, int visited[100];
+
+	scanf_s("%d", &m);
+	for (int i = 0; i < m; i++)
+		visited[i] = 0;
+	    
+		MGraph G;
+	CreateMGraph(&G,m);
+	dis(1, m, &G, visited);
+	return 0;
+}
